@@ -1,32 +1,48 @@
-/**
-Este aplicativo gera uma senha alfanumérica com uma quantidade de dígitos a escolha do usuário.
-*/
 import javax.swing.JOptionPane;
-import java.util.Random;
 
 public class GeraSenha {
 	public static void main(String[] args) {
-		Random ran = new Random();
-		char carac[] = {'0','1','2','3','4','5','6','7','8','9',
-			'A','B','C','D','E','F','G','H','I','J','K','L',
-			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-		int nr_carac = 0;
-		String senha = "", str = "";
+				
+		while(true) {
+			String msg = "";
+			Base base = new Base();
+			int tipo = JOptionPane.showOptionDialog(null,"Tipo de senha",
+				"Selecione",0,3,null,
+				new String[]{"Numérica","Alfabética","Alfanumérica"},
+				"Numérica");
 
-		while(nr_carac <= 0) {		
-			str = "Para gerar uma senha alfanumérica você \ndeve informar a quantidade de caracteres."; 
-			str = JOptionPane.showInputDialog(null,str,"Mensagem",1);
-			if (str == null) System.exit(0);
-			
-			nr_carac = Integer.parseInt(str);
-		}
-		
-		for (int i=nr_carac; i>=1; i--) {
-			senha += carac[ran.nextInt(36)];
-		}
+			if (tipo == -1) System.exit(0);
 
-		str = "Senha: " + senha;
-		JOptionPane.showMessageDialog(null,str,"Mensagem",1);
-		System.exit(0);
+			if (tipo == 0) {
+				msg = "Informe a quantidade de dígitos desejada";
+				msg = JOptionPane.showInputDialog(null,msg,"Números",1);
+				try {
+					JOptionPane.showMessageDialog(null,base.sortNum(msg));
+				} catch (DadoInvalido di) {
+					JOptionPane.showMessageDialog(null,di.getMessage(),"Erro",2);
+				}
+				
+			}
+
+			if (tipo == 1) {
+				msg = "Informe a quantidade de dígitos desejada";
+				msg = JOptionPane.showInputDialog(null,msg,"Números",1);
+				try {
+					JOptionPane.showMessageDialog(null,base.sortLetra(msg));
+				} catch (DadoInvalido di) {
+					JOptionPane.showMessageDialog(null,di.getMessage(),"Erro",2);
+				}
+			}
+
+			if (tipo == 2) {
+				msg = "Informe a quantidade de dígitos desejada";
+				msg = JOptionPane.showInputDialog(null,msg,"Números",1);
+				try {
+					JOptionPane.showMessageDialog(null,base.sortNumLetra(msg));
+				} catch (DadoInvalido di) {
+					JOptionPane.showMessageDialog(null,di.getMessage(),"Erro",2);
+				}
+			}
+		}
 	}
 }
